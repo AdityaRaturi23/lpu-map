@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+    <title>LPU CAMPUS NAVIGATOR</title>
+
+    <!--CSS Link-->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+    <link rel="stylesheet" href="mapStyle.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <!--JS Link-->
+    <script src="mapScript.js" defer></script>
+</head>
+
+<body>
+
+<navbar class="navBar">
+    <div class="mainTitle">
+        <div class="title">
+            <img src="../images/LPU-LOGO.png" alt="LPU LOGO">
+        </div>
+
+        <div>
+            <h1>LPU CAMPUS NAVIGATOR</h1>
+            <p>Lovely Professional University</p>
+        </div>
+    </div>
+
+<!--LOCATE ME SVG-->
+<div class="top-actions">
+    <button id="locateBtn">
+        <svg
+            class="location-icon"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+        >
+
+            <circle
+                cx="12"
+                cy="12"
+                r="9"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+            />
+
+            <circle
+                cx="12"
+                cy="12"
+                r="3.5"
+                fill="currentColor"
+            />
+
+            <line
+                x1="12"
+                y1="1.3"
+                x2="12"
+                y2="5"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+            />
+
+            <line
+                x1="12"
+                y1="18.9"
+                x2="12"
+                y2="22.7"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+            />
+
+            <line
+                x1="1.3"
+                y1="12"
+                x2="5"
+                y2="12"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+            />
+
+            <line
+                x1="19"
+                y1="12"
+                x2="22.7"
+                y2="12"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+            />
+        </svg>
+        Locate Me
+    </button>
+</div>
+</navbar>
+
+
+
+<div class="app">
+
+    <aside class="sidebar">
+
+        <div class="welcome">
+            <span class="small-title">CAMPUS NAVIGATION</span>
+            <h2>Explore LPU</h2>
+            <p><strong>Find academic blocks, hostels, food, healthcare, sports and student facilities.</strong></p>
+        </div>
+
+        <!--INTRO PART SIDEBAR-->
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="SEARCH CAMPUS LOCATION...">
+            <button id="searchBtn">
+                <svg class="search-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                     <circle
+                          cx="10.5"
+                          cy="13"
+                          r="6.5"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"/>
+                     <line
+                          x1="15.5"
+                          y1="17"
+                          x2="21"
+                          y2="23.5"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"/>
+                </svg>
+            </button>
+        </div>
+
+
+        <!-- CATEGORY BUTTONS -->
+
+        <h3 class="section-title">Explore</h3>
+        <div class="categories">
+
+            <button class="category-btn active" data-category="all"><i class="fa-solid fa-globe"></i><span>All</span></button>
+            <button class="category-btn" data-category="academic"><i class="fa-solid fa-building-columns"></i> <span>Academic</span></button>
+            <button class="category-btn" data-category="hostel"><i class="fa-solid fa-house"></i><span>Hostels</span></button>
+            <button class="category-btn" data-category="food"><i class="fa-solid fa-utensils"></i><span>Food</span></button>
+            <button class="category-btn" data-category="health"><i class="fa-solid fa-hospital"></i><span>Health</span></button>
+            <button class="category-btn" data-category="shopping"><i class="fa-solid fa-bag-shopping"></i> <span>Shopping</span></button>
+            <button class="category-btn" data-category="innovation"><i class="fa-solid fa-lightbulb"></i><span>Innovation</span></button>
+            <button class="category-btn" data-category="sports"><i class="fa-solid fa-trophy"></i><span>Sports</span></button>
+            <button class="category-btn" data-category="gate"><i class="fa-solid fa-door-open"></i><span>Gates</span></button>
+        
+        </div>
+
+
+
+        <!-- QUICK SERVICES -->
+
+        <h3 class="section-title">Emergency Numbers</h3>
+        <div class="quick-links">
+
+            <a href="../WEBPAGES/residential.html">Residential Facilities</a>
+            <a href="../WEBPAGES/hospital.html">Hospital</a>
+            <a href="../WEBPAGES/women.html">Women Help and Safety</a>
+            <a href="../WEBPAGES/fire.html">Fire and Safety</a>
+            <a href="../WEBPAGES/ragging.html">Anti-Ragging Committee</a>
+
+        </div>
+
+        <!-- INFO -->
+
+        <div class="info-card">
+
+            <h3>Navigation Tip</h3>
+            <p>Not sure where to go? Search the building name or select a category to explore nearby facilities.</p>
+
+        </div>
+
+    </aside>
+
+
+    <!-- MAP AREA -->
+    <main class="map-container">
+        <div id="map"></div>
+
+        <!-- MAP OVERLAY -->
+        <div class="map-title">
+
+            <span> LPU CAMPUS</span>
+            <strong>Interactive Map</strong>
+
+        </div>
+
+
+        <!-- LEGEND -->
+        <div class="legend">
+
+            <strong>MAP MARKERS</strong>
+
+            
+            <div><i class="fa-solid fa-house"></i>Hostel</div>
+            <div><i class="fa-solid fa-building-columns"></i>Academic</div>
+            <div><i class="fa-solid fa-utensils"></i>Food</div>
+            <div><i class="fa-solid fa-hospital"></i>Health</div>
+            <div><i class="fa-solid fa-bag-shopping"></i>Shopping</div>
+
+        </div>
+    </main>
+
+</div>
+
+
+
+<!-- =====================================================
+     LOCATION INFORMATION MODAL
+===================================================== -->
+
+<div
+    id="locationModal"
+    class="modal hidden">
+
+
+    <div class="modal-content">
+
+
+        <button
+            class="close-modal"
+            onclick="closeModal()">
+
+            ×
+
+        </button>
+
+
+        <div id="modalIcon"
+             class="modal-icon">
+
+            📍
+
+        </div>
+
+
+        <h2 id="modalTitle">
+            Location
+        </h2>
+
+
+        <p id="modalCategory">
+            Category
+        </p>
+
+
+        <div class="modal-description">
+
+            <p id="modalDescription">
+                Description
+            </p>
+
+        </div>
+
+
+        <div class="modal-buttons">
+
+            <button id="routeBtn">
+                🧭 Show Route
+            </button>
+
+            <button id="centerBtn">
+                📍 Show on Map
+            </button>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+
+<!-- =====================================================
+     LEAFLET JAVASCRIPT
+===================================================== -->
+
+<script
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
+</script>
+
+
+<!-- OUR JAVASCRIPT -->
+
+<script src="script.js"></script>
+
+
+</body>
+
+</html>
